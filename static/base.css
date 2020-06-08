@@ -1,0 +1,43 @@
+footer {
+	position: relative;
+	bottom: 0;
+	left:0;
+	padding-bottom: 0px;
+	padding-top: 10px;
+	margin-top: 10px;
+	width: 100%;
+	display: block;
+	background: #2d2b2a;
+	color: #fff;
+	text-align: center;
+	color: rgba(255, 255, 255, .4);
+	padding: 3px;
+}
+header {
+	position: relative;
+	top: 0;
+	left:0;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	
+	width: 100%;
+	display: block;
+	}
+ footer ul {
+	 margin: 0;
+	 padding: 0;
+	 list-style: none;
+}
+ footer ul li {
+	 display: inline-block;
+}
+ footer ul li a {
+	 display: block;
+	 padding: 0.4rem 0.7rem;
+	 font-size: 0.9rem;
+	 text-decoration: none;
+	 color: rgba(255, 255, 255, .7);
+}
+ footer ul li a:hover {
+	 color: white;
+}

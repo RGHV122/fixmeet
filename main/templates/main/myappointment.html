@@ -1,0 +1,62 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+
+{% block head_block %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>  
+  <link rel="stylesheet" type="text/css" href="{% static 'main/search.css' %}">
+{% endblock head_block %}
+{% block body_block%}
+
+{% if no_appointment %}
+<p><strong>
+	<center>
+		{{no_appointment}}
+	</center>
+    </strong>
+</p>
+{% else %}
+
+<p><strong>you've taken appointment with :</strong></p>
+<br>
+
+<div class="container">
+
+{% for appointments in appointment %}
+  
+    <p>
+       <span class="reviews">{{appointments.details.user.name}} on {{ appointments.details.start_time}}</span>
+    </p>
+
+{% endfor %}
+</div>
+{% endif %}
+<br><br><hr><br><br>
+<div>   
+
+ {% if no_meeting %}
+<p><strong>
+  <center>
+    {{no_meeting}}
+  </center>
+    </strong>
+</p>
+{% else %}
+
+<p><strong>you've Meetings with :</strong></p>
+<br>
+
+<div class="container">
+
+{% for meetings in meeting %}
+  
+    <p>
+       <span class="reviews">{{meetings.details.client}} on {{ meetings.details.details.start_time}}</span>
+    </p>
+
+{% endfor %}
+</div>
+{% endif %}
+{% endblock body_block%}

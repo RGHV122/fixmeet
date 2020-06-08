@@ -1,0 +1,45 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+
+{% block head_block %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/search.css' %}">
+{% endblock head_block%}
+{% block body_block %}
+
+<form action="/home/search/" >
+  <center>
+    <input type="text" placeholder="Search..." name="search" id="search" class="searchbar">
+      <button type="submit" class="searchButton btn btn-primary">search</button>
+  </center> 
+</form>
+{% if search_result %}
+<hr>
+
+{% for every_person in search_result %}
+  <div class="content">
+    <h2><a href="/home/profile/{{every_person.id}} " style="color:black;">{{every_person.name}}</a></h2>
+    <p>
+      <span class="company">Title:</span>
+       <span class="reviews">{{every_person.title}}</span>
+    </p>
+    <p>
+      <span class="company">Email:</span>
+       <span class="reviews">{{every_person.email}}</span>
+    </p>
+    <div>
+    	<p>
+      <span class="company">About:</span>
+        <span class="reviews">Great {{every_person.title}}</span>
+    </p>
+    </div>
+    </div>
+
+<hr>
+{% endfor %}
+
+{% endif %}
+{% endblock body_block%}
+<div>
+
+</div>

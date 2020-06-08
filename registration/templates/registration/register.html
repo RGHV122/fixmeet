@@ -1,0 +1,54 @@
+
+
+{% extends "registration/base.html" %}
+{% load static %}
+{% block head_block %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+  <link rel="stylesheet" type="text/css" href="{% static 'register.css' %}">
+{% endblock head_block %}
+{% block body_block %}
+  <div class="container" >
+    <div class="jumbotron">
+      {% if registered %}
+        <h1>Thank you for registering!</h1>
+      {% else %}
+        <h2>Register Here</h2>
+        <p><strong>Just fill out the form.</strong></p>
+<form enctype="multipart/form-data" method="POST">
+          {% csrf_token %}
+         {% for field in form%}
+	<p class="para-small"> 
+		{{ field.label_tag}}
+		{{field}}
+	</p>
+	{% for error in field.error %}
+	<p>{{error}}</p>
+	{% endfor %}
+
+	{% endfor %}
+  <br><br>
+          <input type="submit" class="btn btn-primary form-control " style="height: 50px;" value="Register">
+        </form>
+        
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block footer_block %}
+  <footer>
+
+  <div class="footer-container">
+    <ul>
+      <li><a href="{% url 'admin:login' %} ">Admin Login</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="/">Mainpage</a></li>
+    </ul>
+    <p>Made By <strong>Raghav Mandowara</strong></p>
+  </div>
+</footer>
+
+{% endblock %}

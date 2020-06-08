@@ -1,0 +1,42 @@
+{% extends 'registration/base.html' %}
+
+{% block head_block %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>  
+{% endblock head_block %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+      <h2>Please Login Here !</h2>
+<form method="post" action="{% url 'registration:login' %}">
+          {% csrf_token %}
+          {# A more "HTML" way of creating the login form#}
+          {% for field in form%}
+    <p> 
+      <br>
+      {{ field.label_tag}}
+      {{field}}
+    </p>
+    {% endfor %}
+    <br><br><br>
+<input type="submit" name="" value="Login" class="btn btn-primary form-control" >
+</form>
+</div>
+  </div>
+{% endblock %}
+
+{% block footer_block %}
+  <footer>
+
+  <div class="footer-container">
+    <ul>
+      <li><a href="{% url 'admin:login' %} ">Admin Login</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="/">Mainpage</a></li>
+    </ul>
+    <p>Made By <strong>Raghav Mandowara</strong></p>
+  </div>
+</footer>
+
+{% endblock %}
