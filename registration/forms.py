@@ -15,20 +15,21 @@ TITLE_CHOICES= [
     ]
 
 GENDER_CHOICES = [
+	 ("","Gender"),
 	('M','Male'),
 	('F','Female'),
 	('T','Transgender'),
 ]
 class RegistrationForm(UserCreationForm):
-	password1 = forms.CharField(label='Password', widget=forms.PasswordInput(attrs = {'class':'form-control'}))
-	password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput(attrs = {'class':'form-control'}))
-	email = forms.EmailField(label='Email', widget=forms.TextInput(attrs = {'placeholder':'Email','class':'form-control'}))
-	title= forms.CharField(label='Title',widget=forms.Select(choices=TITLE_CHOICES ,attrs={'class':'form-control'}))
-	gender= forms.CharField(label='Gender',widget=forms.Select(choices=GENDER_CHOICES ,attrs={'class':'form-control'}))
-	name = forms.CharField(label='Name', widget=forms.TextInput(attrs = {'class':'form-control'}))
+	password1 = forms.CharField(label='', widget=forms.PasswordInput(attrs = {'class':'text-input','placeholder':'Password'}))
+	password2 = forms.CharField(label='', widget=forms.PasswordInput(attrs = {'class':'text-input','placeholder':'Re-type password'}))
+	email = forms.EmailField(label='', widget=forms.TextInput(attrs = {'placeholder':'Email','class':'text-input'}))
+	title= forms.CharField(label='',widget=forms.TextInput(attrs={'id':'title','class':'text-input','placeholder':"Title"}))
+	gender= forms.CharField(label='', widget=forms.Select(choices=GENDER_CHOICES ,attrs={'id':'gender','class':'text-input'}))
+	name = forms.CharField(label='', widget=forms.TextInput(attrs = {'class':'text-input','placeholder':'Name'}))
 	class Meta:
 		model = get_user_model()
-		fields = ['email','name','title','gender']
+		fields = ['name','email','title','gender']
 	def clean_password(self):
 		pass1 = self.cleaned_data.get('password1')
 		pass2 = self.cleaned_data.get('password2')
@@ -44,8 +45,9 @@ class RegistrationForm(UserCreationForm):
 		return user
 
 class UserLoginForm(forms.Form):
-	email = forms.EmailField(max_length=60,widget=forms.TextInput(attrs = {'class':'form-control'}))
-	password = forms.CharField(widget=forms.PasswordInput(attrs = {'class':'form-control'}))
+	email = forms.EmailField(label='',max_length=60,widget=forms.TextInput(attrs = {'class':'text-input','placeholder':'Email'}))
+	password = forms.CharField(label='',widget=forms.PasswordInput(attrs = {'id':'password','class':'text-input','placeholder':
+		'Password'}))
 
 	def clean(self,*args,**kargs):
 		email = self.cleaned_data.get('email')

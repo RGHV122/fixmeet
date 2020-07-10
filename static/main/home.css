@@ -1,25 +1,31 @@
-.form-field-pos{
-	position: relative;
-	width: 70%;
-	height :40px;
-	border-width: 2px;
-	border-radius: 5px;
-	border-color: black;
-	padding-left: 30%;
-
-}
 body{
 	background-color: #ccc;
 }
-center{
-	padding: 50px;
-	padding-bottom: 100px;
-	background: #747474;
-	box-shadow: 10px 10px grey;
-}
 
- .sub-btn{
-	padding: 10px;
-	width:200px;
-	margin:50px;
+.container{
+	display: inline-block;
+	font-family: 'Poppins',sans-serif;
+}
+.left{
+	float: left;
+}
+.right{
+	float: right;
+}
+.right h3{
+	font-size: 20px;
+}
+.right input{
+	height: 30px;
+	width: 200px;
+	border-radius: 3px;
+	text-align: center;
+	background-color: white;
+}
+select option{
+	width: 50px;
+}
+input[type=checkbox]{
+	width: auto;
+	height: auto;
 }

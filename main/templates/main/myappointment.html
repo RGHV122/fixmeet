@@ -3,10 +3,8 @@
 
 
 {% block head_block %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>  
-  <link rel="stylesheet" type="text/css" href="{% static 'main/search.css' %}">
+ 
+  <link rel="stylesheet" type="text/css" href="{% static 'main/myappointment.css' %}">
 {% endblock head_block %}
 {% block body_block%}
 
@@ -26,9 +24,15 @@
 
 {% for appointments in appointment %}
   
-    <p>
-       <span class="reviews">{{appointments.details.user.name}} on {{ appointments.details.start_time}}</span>
-    </p>
+       <p class="reviews">{{appointments.details.user.name}} on {{ appointments.details.start_time}}</p>
+
+       <form method="post" action="/google/add-appointment/">
+        {% csrf_token %}
+        <input type="hidden" id="appid" name="appid" value="{{ appointments.id }}">
+        
+         <input type="submit">
+        
+       </form>
 
 {% endfor %}
 </div>

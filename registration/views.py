@@ -13,6 +13,8 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 
 def index(request):
+	if request.user.is_authenticated:
+		return redirect('/home/')
 	return render(request,'registration/index.html')
 
 def user_logout(request):
@@ -20,6 +22,8 @@ def user_logout(request):
 	return redirect('/login/')
 
 def user_register(request):
+	if request.user.is_authenticated:
+		return redirect('/home/')
 	if request.method == 'POST':
 		user_form = RegistrationForm(request.POST)
 		try:
@@ -58,7 +62,9 @@ def user_register(request):
 
 def user_login(request):
 	if request.user.is_authenticated:
-		return redirect("/home/")
+		return redirect('/home/')
+	context = {}
+	context['wrong']=False
 	if request.method == 'POST':
 		user_form = UserLoginForm(request.POST)
 		if user_form.is_valid():
@@ -67,12 +73,14 @@ def user_login(request):
 				login(request,user)
 				return redirect('/home/')
 			else:
-				user_form=UserLoginForm()
-				return render(request,'registration/login.html',{'form':user_form})
+				user_form=UserLoginForm(request.POST)
+				context['form']=user_form,
+				context['wrong']=True
+				return render(request,'registration/login.html',context)
 
 	user_form = UserLoginForm(request.POST)
-	return render(request,'registration/login.html',
-		                  {'form':user_form})
+	context['form']=user_form
+	return render(request,'registration/login.html',context)
 	
 
 # Create your views here.

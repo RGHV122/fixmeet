@@ -19,13 +19,18 @@ from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
 from registration import views as v
+import django.contrib.auth.views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('registration.urls')),
-    path('user/',include('registration.urls')),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         v.activate, name='activate'),
+    
+    path('google/',include('calenderapi.urls')),
 
-
-    path('home/',include('main.urls')),
+    
+   
+    url('^home/change-password/$', auth_views.password_change, {'post_change_redirect': '/home/'}, name='password_change'),
+     path('home/',include('main.urls')),
+     path('myprofile/',include('main.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

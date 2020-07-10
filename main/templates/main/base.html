@@ -1,36 +1,51 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Base</title>
+    <title>Home</title>
     <style type="text/css">
       .right{
         text-align : right;
       }
     </style>
+    <link rel="stylesheet" href="{% static 'main/base.css' %}">
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   
     {% block head_block%}
     {% endblock %}
 </head>
   <body>
-    <nav class="navbar navbar-default navbar-static-top">
-      <div class="container">
-        <ul class="nav navbar-nav">
-          <li><a class="navbar-brand" href="/home">FixMeet</a></li>
-          <li><a class="navbar-link" href="/home">Set Free Hours</a></li> 
-          <li><a = class="navbar-link" href="/home/my-appointment/">My appointments</a></li>
-          <li><a = class="navbar-link" href="/home/search/">Search</a></li>
-        </ul>
-        {% if user %}
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/logout">Logout</a></li>
-            <li><a href="/">Hey {{user}}</a></li>
-          </ul>
-        {% endif %}
+   
 
-      </div>
-    </nav>
+ 
+    <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header" style="margin-left:50px;">
+      <a class="navbar-brand" href="{% url 'main:home' %}">FixMeet</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li ><a href="{% url 'main:home' %}">Home</a></li>
+      
+        
+      <li><a href="{% url 'main:my-appointments' %}">My Meetings</a></li>
+      <li><a href="{% url 'main:search' %}">Search</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right" style="margin-right:50px;">
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Profile<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">My profile</a></li>
+          <li><a href="{% url 'main:change-password' %}">change password</a></li>
+          <li><a href="#">Account setting</a></li>
+          <li><a href="{% url 'registration:logout' %}">Logout</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
     <div class="container">
     {% block body_block %}
     {% endblock %}

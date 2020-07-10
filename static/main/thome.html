@@ -1,0 +1,67 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block head_block%}
+
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>  
+  <link rel="stylesheet" href="{% static 'main/home.css' %}">
+{% endblock head_block %}
+
+
+
+{% block body_block %}
+<div class="container">
+<section >
+  
+</section>
+<section>
+  
+</section>
+<div>
+<center class="center-body">
+  
+  {%if valid %}
+ <div class="alert alert-success">
+  <strong>Success!</strong> Slot Saved.
+</div>
+{% elif not_valid %}
+<div class="alert alert-danger">
+  <strong>Slot Not Valid !</strong> Please Enter Future Time.
+</div>
+{% elif collide %}
+<div class="alert alert-danger">
+  <strong>Slot Not Valid !</strong> Time collides with another slot.
+</div>
+{% elif failed %}
+<div class="alert alert-danger">
+  <strong>Slot Not Valid !</strong> Something wrong occured.
+</div>
+
+{% endif %}
+
+
+<form action = "/home/set-free-hour/" method="post" class="form-group">
+
+    {% csrf_token %}
+
+  <label for="date">Choose Date : </label><br>
+  <input type="date" name="date" id = "date" class="form-field-pos" >
+
+<br><hr><br>
+
+<label for="time">Choose start of free time:</label><br>
+<input type="time" name="time" id="time" class="form-field-pos">
+
+
+<br><br><br><br>
+<button type="submit" class="btn btn-primary sub-btn">Add Slot</button>
+
+</form>
+</center>
+
+{% endblock body_block %}

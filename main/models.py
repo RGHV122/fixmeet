@@ -13,8 +13,10 @@ class FreeTime(models.Model):
 class Appointments(models.Model):
 	client = models.ForeignKey(MyUser, on_delete=models.CASCADE)
 	details =  models.ForeignKey(FreeTime, on_delete=models.CASCADE)
+	added_to_google_calendar = models.BooleanField(default=False)
 
 class Meetings(models.Model):
 	provider = models.ForeignKey(MyUser,on_delete=models.CASCADE)
 	details = models.ForeignKey(Appointments,on_delete=models.CASCADE)
+	added_to_google_calendar = models.BooleanField(default=False)
 

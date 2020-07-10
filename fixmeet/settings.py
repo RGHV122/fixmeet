@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'registration',
-    'main'
+    'main',
+    'calenderapi',
+    
 ]
 
 MIDDLEWARE = [
@@ -122,7 +124,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL='/home/'
 MEDIA_URL = '/media/'
-
+MEDIA_DIR = os.path.join(BASE_DIR,'media')
 #email confirmation
 
 EMAIL_USE_TLS = True

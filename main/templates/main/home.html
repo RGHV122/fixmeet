@@ -6,55 +6,68 @@
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Home</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>  
+ 
   <link rel="stylesheet" href="{% static 'main/home.css' %}">
-  <title>Set Free Hours</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="{% static 'main/home.js' %}"></script>
 {% endblock head_block %}
 
 
 
 {% block body_block %}
-<center class="center-body">
+<div class="container">
+<section class="left">
+  <h3>Add Personal Events</h3>
+
   
-  {%if valid %}
- <div class="alert alert-success">
-  <strong>Success!</strong> Slot Saved.
-</div>
-{% elif not_valid %}
-<div class="alert alert-danger">
-  <strong>Slot Not Valid !</strong> Please Enter Future Time.
-</div>
-{% elif collide %}
-<div class="alert alert-danger">
-  <strong>Slot Not Valid !</strong> Time collides with another slot.
-</div>
-{% elif failed %}
-<div class="alert alert-danger">
-  <strong>Slot Not Valid !</strong> Something wrong occured.
-</div>
-
-{% endif %}
+</section>
 
 
-<form action = "/home/set-free-hour/" method="post" class="form-group">
 
-    {% csrf_token %}
+<section class="right">
+  <h3> Add professional Free hours<hr></h3>
+  {% if message %}
+  <p>{{message}}</p>
+  {% endif%}
+<form method="post" action="{% url 'main:add-slot' %}" onsubmit="return slotchecker()">
+  {% csrf_token %}
+    <p>Date: <input type="text" id="datepicker" name="datepicker"></p>
+    <div id="timeselect" class="timeselect">
+      <p style="text-align:left;">Time:</p>
+       <p>Hour: <select id="hour" name="hour">
+        {% for i in hourlist %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+      </select> 
+      Minute:
+      <select id="minute" name="minute">
+        {% for i in minutelist %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+      </select>
+      </select> </p>
+      <input type="hidden" name="time" id="time" value="">
+  </div>
+  <div id="dayselect" class="dayselect" style="display:none;">
+    <p style="text-align:left;">Start Time:</p><p>Hour: <select id="starthour" name="starthour">{% for i in hourlist %}<option value="{{i}}">{{i}}</option>{% endfor %}</select> Minute:<select id="startminute" name="startminute">{% for i in minutelist %}<option value="{{i}}">{{i}}</option>{% endfor %}</select></select> </p><input type="hidden" name="starttime" id="starttime" value=""><p style="text-align:left;">End Time:</p><p>Hour: <select id="endhour" name="endhour">{% for i in hourlist %}<option value="{{i}}">{{i}}</option>{% endfor %}</select> Minute:<select id="endminute" name="endminute">{% for i in minutelist %}<option value="{{i}}">{{i}}</option>{% endfor %}</select></select> </p><input type="hidden" name="endtime" id="endtime" value="">
 
-  <label for="date">Choose Date : </label><br>
-  <input type="date" name="date" id = "date" class="form-field-pos" >
-
-<br><hr><br>
-
-<label for="time">Choose start of free time:</label><br>
-<input type="time" name="time" id="time" class="form-field-pos">
-
-
-<br><br><br><br>
-<button type="submit" class="btn btn-primary sub-btn">Add Slot</button>
-
+     
+  </div>
+  <p>
+  <input type="checkbox" onclick="toggledayselect(this);" id="daychecker" name="day" value="">add for whole day?</p>
+  <br>
+    <input type="submit" name="Add" value="Add">
 </form>
-</center>
+
+
+
+
+</section>
+<div>
+
+
+
 
 {% endblock body_block %}

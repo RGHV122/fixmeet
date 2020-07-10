@@ -12,44 +12,66 @@ def home (request):
 		pass
 	else:
 		return redirect('/login/')
-	return render(request,'main/home.html')
+	context={}
+	hourlist=[]
+	minutelist=[]
+	for i in range(0,60):
+		minutelist.append(i)
+	for i in range(0,24):
+		hourlist.append(i)
+	context['hourlist']=hourlist
+	context['minutelist']=minutelist
+	return render(request,'main/home.html',context)
 
-
-def set_free_hour(request):
+def add_slot(request):
 	context ={}
 	if request.user.is_authenticated and request.user.is_active:
-		if request.method == 'POST':
-			try:
-				selected_date = request.POST.get('date').split('-')
-				
-				selected_time = request.POST.get('time').split(':')
-				starting_time = datetime.datetime(int(selected_date[0]),int(selected_date[1]),int(selected_date[2]),int(selected_time[0])
-					,int(selected_time[1]))
-				today = datetime.datetime.now()
-				context['user']=request.user.name
-				if(starting_time < today):
-					context['not_valid']='Not valid time'
-					return render(request,'main/home.html',context)
-				else:
-					pass
-				delta = datetime.timedelta(hours=1)
-				ending_time = starting_time + delta
-				app = FreeTime.objects.filter(user = MyUser.objects.get(id=request.user.id),start_time__range=[starting_time-delta,
-				 ending_time])
-				print("apppppppppppppp",len(app))
-				if len(app)==0:
-					
-					FreeTime.objects.create(user = MyUser.objects.get(id=request.user.id),start_time = starting_time,end_time = ending_time)
-					context['valid']='valid'
-					return render(request,'main/home.html',context)
-				else:
-					context['collide']='Slot is collides with another'
-					return render(request,'main/home.html',context)
-			except:
-				context['failed']='Not valid time'
-				return render(request,'main/home.html',context)
+		pass
 	else:
-		return redirect('/registration/user_login/')
+		return redirect('/login/')
+
+	if request.method == 'POST':
+		selected_date = request.POST.get('datepicker').split('/')
+		try:
+			if(request.POST.get(daychecker)):
+				pass
+			else:
+				selected_time = request.POST.get('starttime').split(':')
+				starting_time = datetime.datetime(int(selected_date[2]),int(selected_date[0]),int(selected_date[1]),int(selected_time[0])
+				,int(selected_time[1]))
+				endabsolute =request.POST.get('starttime').split(':')
+				starting_time = datetime.datetime(int(selected_date[2]),int(selected_date[0]),int(selected_date[1]),int(endabsolute[0])
+				,int(endabsolute[1]))
+				delta = datetime.timedelta(hours=1)
+				while(starting_time<endabsolute-delta):
+					ending_time = starting_time + delta
+					app = FreeTime.objects.filter(user = MyUser.objects.get(id=request.user.id),start_time__range=[starting_time-delta,ending_time])
+					if len(app)==0:
+						FreeTime.objects.create(user = MyUser.objects.get(id=request.user.id),start_time = starting_time,end_time = ending_time)
+					starting_time=starting_time+delta
+				return render(request,'main/home.html',{'message':'saved!'})
+
+			selected_time = request.POST.get('time').split(':')
+
+			starting_time = datetime.datetime(int(selected_date[2]),int(selected_date[0]),int(selected_date[1]),int(selected_time[0])
+				,int(selected_time[1]))
+			today = datetime.datetime.now()
+			delta = datetime.timedelta(hours=1)
+			ending_time = starting_time + delta
+			app = FreeTime.objects.filter(user = MyUser.objects.get(id=request.user.id),start_time__range=[starting_time-delta,
+			 ending_time])
+			if len(app)==0:
+				FreeTime.objects.create(user = MyUser.objects.get(id=request.user.id),start_time = starting_time,end_time = ending_time)
+				context['message']='valid'
+				return render(request,'main/home.html',context)
+			else:
+				context['message']='Slot is collides with another'
+				return render(request,'main/home.html',context)
+		except:
+			context['message']='Not valid time'
+			return render(request,'main/home.html',context)
+
+		
 
 
 def search(request):
@@ -66,7 +88,7 @@ def search(request):
 		return render(request,'main/search.html',)
 	
 	search = request.GET['search']
-	search_result = MyUser.objects.filter(name__istartswith=search).order_by('-score').values()
+	search_result = MyUser.objects.filter(name__istartswith=search).filter(is_active=True).order_by('-score').values()
 	search_result = [entry for entry in search_result]
 	context = {}
 	context['search_result'] = search_result
@@ -183,7 +205,6 @@ def my_appointments(request):
 	appointment = Appointments.objects.filter(client = MyUser.objects.get(id=request.user.id),
 		details__in=detail)
 
-	print(appointment)
 	meeting = Meetings.objects.filter(provider=MyUser.objects.get(id=request.user.id),
 		details__in=Appointments.objects.filter(details__in=detail))
 	appointment = [entry for entry in appointment] 
@@ -192,7 +213,6 @@ def my_appointments(request):
 		context['no_appointment']="No future appointment"
 	else:
 		context['appointment']=appointment
-
 	
 	meeting = [entry for entry in meeting] 
 	if(len(meeting)==0):
@@ -201,6 +221,14 @@ def my_appointments(request):
 		context['meeting'] = meeting
 	return render(request,'main/myappointment.html',context)
 
-
+def change_password(request):
+	if request.user.is_authenticated:
+		pass
+	else:
+		return redirect('/login/')
+	if request.POST:
+		pass
+	else:
+		return render(request,'main/changepassword.html')
 
 	
