@@ -36,7 +36,7 @@ def get_credentials():
     Returns:
         Credentials, the obtained credential.
     """
-
+    
     home_dir = os.path.expanduser('~')
     credential_dir = os.path.join(home_dir, '.credentials')
     if not os.path.exists(credential_dir):
@@ -100,6 +100,12 @@ def main(request):
 
 
 #Class based view for updating values. Noooooo idea how this shit works (I do, called from urls.py)
+if __name__ == '__main__':
+    main()
+#Class based view for updating values. Noooooo idea how this shit works (I do, called from urls.py)
+class EventUpdate(UpdateView):
+    model = Event
+    
 class EventUpdate(UpdateView):
     model = Event
     fields = ['saleDocLink','salePointsCreated','researchDone','internalMeetingCreated']

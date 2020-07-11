@@ -26,11 +26,12 @@
   
        <p class="reviews">{{appointments.details.user.name}} on {{ appointments.details.start_time}}</p>
 
-       <form method="post" action="/google/add-appointment/">
+       <form method="post" action="{% url 'gapi:add-appointment' %}">
         {% csrf_token %}
+        <p style="display:inline-block;">
         <input type="hidden" id="appid" name="appid" value="{{ appointments.id }}">
-        
-         <input type="submit">
+         <input type="submit" value="Add to google calendar">
+       </p>
         
        </form>
 

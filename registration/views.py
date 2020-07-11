@@ -49,7 +49,7 @@ def user_register(request):
 			email = EmailMessage(mail_subject, message, to=[to_email])
 			email.send()
 			return HttpResponse('Please confirm your email address to complete the registration')
-			redirect('login')
+			return redirect('login')
 		else:
 			return render(request,'registration/register.html',
 		                  {'form':user_form})

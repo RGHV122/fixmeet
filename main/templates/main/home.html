@@ -27,9 +27,13 @@
 
 
 <section class="right">
-  <h3> Add professional Free hours<hr></h3>
+  
   {% if message %}
+  <p> <strong>Add professional Free hours</strong></p>
   <p>{{message}}</p>
+  <hr>
+  {% else %}
+  <h3>Add professional Free hours</h3>
   {% endif%}
 <form method="post" action="{% url 'main:add-slot' %}" onsubmit="return slotchecker()">
   {% csrf_token %}
@@ -50,13 +54,7 @@
       </select> </p>
       <input type="hidden" name="time" id="time" value="">
   </div>
-  <div id="dayselect" class="dayselect" style="display:none;">
-    <p style="text-align:left;">Start Time:</p><p>Hour: <select id="starthour" name="starthour">{% for i in hourlist %}<option value="{{i}}">{{i}}</option>{% endfor %}</select> Minute:<select id="startminute" name="startminute">{% for i in minutelist %}<option value="{{i}}">{{i}}</option>{% endfor %}</select></select> </p><input type="hidden" name="starttime" id="starttime" value=""><p style="text-align:left;">End Time:</p><p>Hour: <select id="endhour" name="endhour">{% for i in hourlist %}<option value="{{i}}">{{i}}</option>{% endfor %}</select> Minute:<select id="endminute" name="endminute">{% for i in minutelist %}<option value="{{i}}">{{i}}</option>{% endfor %}</select></select> </p><input type="hidden" name="endtime" id="endtime" value="">
 
-     
-  </div>
-  <p>
-  <input type="checkbox" onclick="toggledayselect(this);" id="daychecker" name="day" value="">add for whole day?</p>
   <br>
     <input type="submit" name="Add" value="Add">
 </form>

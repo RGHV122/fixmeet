@@ -31,45 +31,30 @@ def add_slot(request):
 		return redirect('/login/')
 
 	if request.method == 'POST':
+		pass
+	else:
+		return redirect("/")
+	try:
 		selected_date = request.POST.get('datepicker').split('/')
-		try:
-			if(request.POST.get(daychecker)):
-				pass
-			else:
-				selected_time = request.POST.get('starttime').split(':')
-				starting_time = datetime.datetime(int(selected_date[2]),int(selected_date[0]),int(selected_date[1]),int(selected_time[0])
-				,int(selected_time[1]))
-				endabsolute =request.POST.get('starttime').split(':')
-				starting_time = datetime.datetime(int(selected_date[2]),int(selected_date[0]),int(selected_date[1]),int(endabsolute[0])
-				,int(endabsolute[1]))
-				delta = datetime.timedelta(hours=1)
-				while(starting_time<endabsolute-delta):
-					ending_time = starting_time + delta
-					app = FreeTime.objects.filter(user = MyUser.objects.get(id=request.user.id),start_time__range=[starting_time-delta,ending_time])
-					if len(app)==0:
-						FreeTime.objects.create(user = MyUser.objects.get(id=request.user.id),start_time = starting_time,end_time = ending_time)
-					starting_time=starting_time+delta
-				return render(request,'main/home.html',{'message':'saved!'})
+		selected_time = request.POST.get('time').split(':')
 
-			selected_time = request.POST.get('time').split(':')
-
-			starting_time = datetime.datetime(int(selected_date[2]),int(selected_date[0]),int(selected_date[1]),int(selected_time[0])
-				,int(selected_time[1]))
-			today = datetime.datetime.now()
-			delta = datetime.timedelta(hours=1)
-			ending_time = starting_time + delta
-			app = FreeTime.objects.filter(user = MyUser.objects.get(id=request.user.id),start_time__range=[starting_time-delta,
-			 ending_time])
-			if len(app)==0:
-				FreeTime.objects.create(user = MyUser.objects.get(id=request.user.id),start_time = starting_time,end_time = ending_time)
-				context['message']='valid'
-				return render(request,'main/home.html',context)
-			else:
-				context['message']='Slot is collides with another'
-				return render(request,'main/home.html',context)
-		except:
-			context['message']='Not valid time'
+		starting_time = datetime.datetime(int(selected_date[2]),int(selected_date[0]),int(selected_date[1]),int(selected_time[0])
+			,int(selected_time[1]))
+		today = datetime.datetime.now()
+		delta = datetime.timedelta(hours=1)
+		ending_time = starting_time + delta
+		app = FreeTime.objects.filter(user = MyUser.objects.get(id=request.user.id),start_time__range=[starting_time-delta,
+		 ending_time])
+		if len(app)==0:
+			FreeTime.objects.create(user = MyUser.objects.get(id=request.user.id),start_time = starting_time,end_time = ending_time)
+			context['message']='valid'
 			return render(request,'main/home.html',context)
+		else:
+			context['message']='Slot is collides with another'
+			return render(request,'main/home.html',context)
+	except:
+		context['message']='Not valid time'
+		return render(request,'main/home.html',context)
 
 		
 
@@ -88,7 +73,7 @@ def search(request):
 		return render(request,'main/search.html',)
 	
 	search = request.GET['search']
-	search_result = MyUser.objects.filter(name__istartswith=search).filter(is_active=True).order_by('-score').values()
+	search_result = MyUser.objects.filter(name__istartswith=search,is_active=True).exclude(id=request.user.id).order_by('-score').values()
 	search_result = [entry for entry in search_result]
 	context = {}
 	context['search_result'] = search_result

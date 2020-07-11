@@ -22,7 +22,10 @@ body{
 	text-align: center;
 	background-color: white;
 }
-select option{
+select{
+	width: 50px;
+}
+option{
 	width: 50px;
 }
 input[type=checkbox]{

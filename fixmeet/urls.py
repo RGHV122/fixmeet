@@ -23,10 +23,10 @@ import django.contrib.auth.views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('registration.urls')),
-    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         v.activate, name='activate'),
     
-    path('google/',include('calenderapi.urls')),
+    path('google/',include('calendarapi.urls')),
 
     
    
